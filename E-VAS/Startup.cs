@@ -22,13 +22,16 @@ namespace E_VAS
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
 
+            //TODO add this for production: MYSQLCONNSTR_localdb (environment variable)
             services.AddDbContext<DataContext>(options =>
-                options.UseMySql(
-                    Configuration["Database:DefaultConnectionString"]), ServiceLifetime.Transient);
+                options.UseMySql("Server=127.0.0.1;Port=3306;Database=EVAS;Uid=EVASUser;Pwd=devpassword123;"), ServiceLifetime.Transient);
+
+            services.AddSingleton<WeatherForecastService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
