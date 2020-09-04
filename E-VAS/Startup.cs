@@ -22,14 +22,14 @@ namespace E_VAS
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
             //TODO add this for production: MYSQLCONNSTR_localdb (environment variable)
             services.AddDbContext<DataContext>(options =>
                 options.UseMySql("Server=127.0.0.1;Port=3306;Database=EVAS;Uid=EVASUser;Pwd=devpassword123;"), ServiceLifetime.Transient);
+
+            services.AddControllers();
 
             services.AddSingleton<WeatherForecastService>();
         }
@@ -57,6 +57,7 @@ namespace E_VAS
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
+                endpoints.MapControllers();
             });
         }
     }
