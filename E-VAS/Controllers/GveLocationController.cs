@@ -22,14 +22,16 @@ namespace E_VAS.Controllers
         [HttpPost("AddRecord")]
         public HttpResponseMessage AddRecord([FromBody] GveLocationModel model)
         {
-            if(string.IsNullOrEmpty(model.GveId))
+            if(model.Gve == null)
                 return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
             dataContext.GveLocationModel.Add(new GveLocationModel()
             {
-                GveId = model.GveId,
+                Gve = model.Gve,
                 Coordinates = model.Coordinates,
                 TimeStamp = model.TimeStamp
             });
+
+            dataContext.SaveChanges();
 
             return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
         }

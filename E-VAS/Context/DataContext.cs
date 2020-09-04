@@ -10,7 +10,7 @@ namespace E_VAS.Context
     public class DataContext : DbContext
     {
         public DbSet<GveLocationModel> GveLocationModel { get; set; }
-
+        public DbSet<GveModel> GveModel { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
             Database.Migrate();

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace E_VAS.Data.Models
 {
-    public class GveModel
+    public class TvdModel
     {
         [Key]
-        public string GveId { get; set; }
-        public TvdModel Tvd { get; set; }
+        public string TvdId { get; set; }
+        //Other data from the TVD
     }
 }

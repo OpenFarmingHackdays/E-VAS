@@ -9,7 +9,8 @@ namespace E_VAS.Data.Models
     public class GveLocationModel
     {
         [Key]
-        public string GveId { get; set; }
+        public int Id { get; set; }
+        public GveModel Gve { get; set; }
         public string Coordinates { get; set; }
         public DateTime TimeStamp { get; set; }
     }
