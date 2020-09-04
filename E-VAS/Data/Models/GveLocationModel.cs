@@ -11,7 +11,8 @@ namespace E_VAS.Data.Models
         [Key]
         public int Id { get; set; }
         public GveModel Gve { get; set; }
-        public string Coordinates { get; set; }
+        public float Latitude  { get; set; }
+        public float Longitude { get; set; }
         public DateTime TimeStamp { get; set; }
     }
 }

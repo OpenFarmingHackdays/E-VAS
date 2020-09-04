@@ -1,0 +1,31 @@
+﻿@page "/map"
+@inject IJSRuntime jsruntime
+@inject DataContext dataContext
+@using E_VAS.Context;
+@using E_VAS.Data.Models;
+@using Microsoft.EntityFrameworkCore;
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<link rel="stylesheet" href="css/map.css" />
+<h1>Animal Map</h1>
+
+<div id="map">
+
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await jsruntime.InvokeVoidAsync("createMap");
+            var grouped = dataContext.GveLocationModel.Include(x=>x.Gve).ToList();
+            var entryList = new List<GveLocationModel>();
+            foreach (var group in grouped)
+            {
+                var entry = group;
+                entryList.Add(entry);
+            }
+            await jsruntime.InvokeVoidAsync("createMapMarkers", entryList);
+        }
+    }
+}
