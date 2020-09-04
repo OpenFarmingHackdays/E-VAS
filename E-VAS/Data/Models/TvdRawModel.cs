@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace E_VAS.Data.Models
+﻿namespace E_VAS.Data.Models
 {
-    public class TvdModel
+    public class TvdRawModel
     {
-        [Key]
         public string Ohrmarkennummer { get; set; }
         public string Name { get; set; }
         public string Geschlecht { get; set; }
