@@ -10,6 +10,7 @@ namespace E_VAS.Data.Models
     {
         [Key]
         public string GveId { get; set; }
+        public string Name { get; set; }
         public TvdModel Tvd { get; set; }
     }
 }

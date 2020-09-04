@@ -11,27 +11,20 @@ namespace E_VAS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GveLocationController : Controller
+    public class GveManagementController : Controller
     {
         private DataContext dataContext;
-        public GveLocationController(DataContext dataContext)
+        public GveManagementController(DataContext dataContext)
         {
             this.dataContext = dataContext;
         }
-        
-        /// <summary>
-        /// Adds a new record with the location of the GVE to the database.
-        /// This is usally "called" by the GPS Tracker, but can also be called manually
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [HttpPost("AddRecord")]
-        public HttpResponseMessage AddRecord([FromBody] GveLocationModel model)
-        {
-            if(model.Gve == null)
-                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
 
-            dataContext.GveLocationModel.Add(model);
+        [HttpPost("AddNewGve")]
+        public HttpResponseMessage AddNewGve([FromBody] GveModel model)
+        {
+            if (model.GveId == null)
+                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+            dataContext.GveModel.Add(model);
 
             dataContext.SaveChanges();
 
