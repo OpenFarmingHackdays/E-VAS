@@ -35,6 +35,7 @@ namespace E_VAS
             services.AddControllers();
 
             services.AddSingleton<CategoryMapper>();
+            services.AddSingleton<PolygonIntersectHelper>();
             services.AddScoped<HttpClient>();
 
             services.AddMatToaster(config =>
