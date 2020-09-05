@@ -23,7 +23,7 @@
         {
             <td>@context.Tvd.Name</td>
         }
-        <td>@CategoryMapper.GetCategory(context.Tvd)</td>
+        <td>@context.CategoryId</td>
     </MatTableRow>
 </MatTable>
 
@@ -87,7 +87,8 @@
                     {
                         GveId = Guid.NewGuid().ToString(),
                         Name = item.Name,
-                        Tvd = item
+                        Tvd = item,
+                        CategoryId = CategoryMapper.GetCategory(item)
                     });
                 }
             }

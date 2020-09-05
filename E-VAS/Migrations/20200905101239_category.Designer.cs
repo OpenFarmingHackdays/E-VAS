@@ -3,14 +3,16 @@ using System;
 using E_VAS.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_VAS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200905101239_category")]
+    partial class category
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +30,6 @@ namespace E_VAS.Migrations
 
                     b.Property<float>("Latitude")
                         .HasColumnType("float");
-
-                    b.Property<string>("LocationCategory")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<float>("Longitude")
                         .HasColumnType("float");

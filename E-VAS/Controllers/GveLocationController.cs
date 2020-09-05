@@ -31,6 +31,8 @@ namespace E_VAS.Controllers
             if(model.Gve == null)
                 return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
 
+            //TODO at this point, calculate the current location of the GVE (L, S or W) and write it on the table
+            //For the journal, we can just condense the data and export it.
             dataContext.GveLocationModel.Add(model);
 
             dataContext.SaveChanges();
