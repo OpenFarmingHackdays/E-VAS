@@ -16,6 +16,9 @@ function createMapMarkers(markerPositions) {
         markerArray.push(L.marker([element.latitude, element.longitude]).addTo(map)
             .bindPopup(element.gve.name));
     });
-    var group = L.featureGroup(markerArray).addTo(map);
-    map.fitBounds(group.getBounds());
+    if(markerArray.length >0)
+    {
+        var group = L.featureGroup(markerArray).addTo(map);
+        map.fitBounds(group.getBounds());
+    }
 }
