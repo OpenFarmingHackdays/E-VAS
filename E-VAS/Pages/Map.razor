@@ -4,6 +4,7 @@
 @using E_VAS.Context;
 @using E_VAS.Data.Models;
 @using Microsoft.EntityFrameworkCore;
+@using System;
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 <link rel="stylesheet" href="css/map.css" />
 <h1>Animal Map</h1>
@@ -18,9 +19,11 @@
         if (firstRender)
         {
             await jsruntime.InvokeVoidAsync("createMap");
-            var grouped = dataContext.GveLocationModel.Include(x=>x.Gve).ToList();
+            var all = dataContext.GveLocationModel.Include(x => x.Gve).OrderByDescending(x=>x.TimeStamp).ToList();
+            var time_filtered = all.Where(x => (DateTime.Now - x.TimeStamp).TotalMinutes  < 30).ToList();
+            var filtered = time_filtered.GroupBy(x => x.Gve.GveId).Select(animal => animal.First());
             var entryList = new List<GveLocationModel>();
-            foreach (var group in grouped)
+            foreach (var group in filtered)
             {
                 var entry = group;
                 entryList.Add(entry);

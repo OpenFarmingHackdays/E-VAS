@@ -10,9 +10,12 @@ function createMap() {
 
 function createMapMarkers(markerPositions) {
     console.log(markerPositions);
+    var markerArray = [];
     markerPositions.forEach(element => {
         console.log(element);
-        L.marker([element.latitude, element.longitude]).addTo(map)
-            .bindPopup(element.gve.name);
+        markerArray.push(L.marker([element.latitude, element.longitude]).addTo(map)
+            .bindPopup(element.gve.name));
     });
+    var group = L.featureGroup(markerArray).addTo(map);
+    map.fitBounds(group.getBounds());
 }
