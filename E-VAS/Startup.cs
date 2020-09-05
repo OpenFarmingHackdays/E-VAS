@@ -35,6 +35,7 @@ namespace E_VAS
             services.AddControllers();
 
             services.AddSingleton<CategoryMapper>();
+            services.AddSingleton<JournalCalculator>();
             services.AddScoped<HttpClient>();
 
             services.AddMatToaster(config =>
@@ -54,6 +55,7 @@ namespace E_VAS
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.AddEfDiagrams<DataContext>();
             }
             else
             {
