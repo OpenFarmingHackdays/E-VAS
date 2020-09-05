@@ -1,5 +1,6 @@
 using E_VAS.Context;
 using E_VAS.Data;
+using E_VAS.Source;
 using MatBlazor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +35,7 @@ namespace E_VAS
             services.AddControllers();
 
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<CategoryMapper>();
             services.AddScoped<HttpClient>();
 
             services.AddMatToaster(config =>

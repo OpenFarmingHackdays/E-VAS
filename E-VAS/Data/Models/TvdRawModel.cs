@@ -16,7 +16,7 @@
         public string Gltigab { get; set; }
         public string VorherigeNutzungsart { get; set; }
         public string Zugangsdatum { get; set; }
-        public string Herkunftsbetrieb { get; set; }
+        //public string Herkunftsbetrieb { get; set; } This will not be stored because of data protection reason
         public string Abgangsdatum { get; set; }
         public string Folgebetrieb { get; set; }
         public string Tiergeschichte { get; set; }
