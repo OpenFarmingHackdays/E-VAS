@@ -33,6 +33,16 @@
     private List<GveModel> gves = new List<GveModel>();
     private bool buttonDisabled = false;
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            gves = await DataContext.GveModel.Include(x => x.Tvd).ToListAsync();
+            this.StateHasChanged();
+        }
+    }
+
+
     private async Task SaveImportedData()
     {
         buttonDisabled = true;

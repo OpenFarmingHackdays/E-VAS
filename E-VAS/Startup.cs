@@ -34,13 +34,12 @@ namespace E_VAS
 
             services.AddControllers();
 
-            services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<CategoryMapper>();
             services.AddScoped<HttpClient>();
 
             services.AddMatToaster(config =>
             {
-                config.Position = MatToastPosition.BottomRight;
+                config.Position = MatToastPosition.BottomCenter;
                 config.PreventDuplicates = true;
                 config.NewestOnTop = true;
                 config.ShowCloseButton = true;
