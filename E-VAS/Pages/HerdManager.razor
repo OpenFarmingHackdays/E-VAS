@@ -5,7 +5,7 @@
 
 <h3>Deine Herde:</h3>
 
-<MatFileUpload OnChange="@FilesReady" Label="Drop a single file here or Browse"></MatFileUpload>
+<MatFileUpload OnChange="@FilesReady" Label="Hier klicken, oder eine Datei hierhin ziehen."></MatFileUpload>
 
 <MatTable Items="@gves">
     <MatTableHeader>
@@ -27,8 +27,6 @@
     </MatTableRow>
 </MatTable>
 
-<MatButton Raised="true" Disabled="buttonDisabled" OnClick="SaveImportedData">Daten speichern</MatButton>
-
 @code {
     private List<GveModel> gves = new List<GveModel>();
     private bool buttonDisabled = false;
@@ -42,28 +40,12 @@
         }
     }
 
-
-    private async Task SaveImportedData()
-    {
-        buttonDisabled = true;
-        try
-        {
-            await DataContext.GveModel.AddRangeAsync(gves);
-            await DataContext.SaveChangesAsync();
-
-            Toaster.Add("Daten gespeichert.", MatToastType.Success);
-        }
-        catch
-        {
-            //ignored (data probably already exists)
-        }
-        buttonDisabled = false;
-    }
-
     async Task FilesReady(IMatFileUploadEntry[] files)
     {
         //delete all currently existing data.
-        DataContext.GveModel.RemoveRange(DataContext.GveModel);
+        DataContext.GveModel.RemoveRange(DataContext.GveModel.Include(x => x.Tvd).ToList());
+        this.gves.Clear();
+        this.StateHasChanged();
 
         if (files.Length != 1)
             return;
@@ -110,7 +92,20 @@
                 }
             }
 
-            Toaster.Add("Daten erfolgreich importiert.", MatToastType.Success);
+            try
+            {
+                //Clear everything
+                await DataContext.Database.ExecuteSqlRawAsync("DELETE FROM gvemodel");
+                await DataContext.Database.ExecuteSqlRawAsync("DELETE FROM tvdmodel");
+                //add the data
+                await DataContext.GveModel.AddRangeAsync(gves);
+                await DataContext.SaveChangesAsync();
+            }
+            catch
+            {
+                //Toaster.Add("Fehler bei der Speicherung", MatToastType.Danger);
+            }
+            Toaster.Add("Daten importiert.", MatToastType.Success);
         }
     }
 }
