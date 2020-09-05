@@ -11,6 +11,8 @@ namespace E_VAS.Context
     {
         public DbSet<GveLocationModel> GveLocationModel { get; set; }
         public DbSet<GveModel> GveModel { get; set; }
+        public DbSet<GvePlaceModel> GvePlaceModel { get; set; }
+        public DbSet<GvePlacePointModel> GvePlacePointModel { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
             Database.Migrate();

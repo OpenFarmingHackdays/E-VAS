@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 
-class PolygonIntersectHelper
+public class PolygonIntersectHelper
 {
     public bool IsPointInPolygon(PointF[] polygon, PointF point)
     {
