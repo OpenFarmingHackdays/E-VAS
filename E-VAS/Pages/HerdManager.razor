@@ -1,0 +1,64 @@
+﻿@page "/herde"
+@inject IMatToaster Toaster
+
+<h3>Deine Herde:</h3>
+
+<MatFileUpload OnChange="@FilesReady" Label="Drop a single file here or Browse"></MatFileUpload>
+
+<MatTable Items="@gves">
+    <MatTableHeader>
+        <th>Ohrenmarkennummer</th>
+        <th>Name</th>
+        <th>Kategorie</th> @*TODO Create class to "calculate" category from age etc. Check Slack screenshots.*@
+    </MatTableHeader>
+    <MatTableRow>
+        <td>@context.Tvd.Ohrmarkennummer</td>
+        <td>@context.Tvd.Name</td>
+        <td>Not Supported yet. Get to work!</td>
+    </MatTableRow>
+</MatTable>
+
+@code {
+    private List<GveModel> gves = new List<GveModel>();
+
+    async Task FilesReady(IMatFileUploadEntry[] files)
+    {
+        if (files.Length != 1)
+            return;
+
+        List<TvdModel> records = new List<TvdModel>();
+
+        using (var stream = new MemoryStream())
+        {
+            await files[0].WriteToStreamAsync(stream);
+
+            stream.Seek(0, SeekOrigin.Begin);
+            using (var reader = new StreamReader(stream))
+            {
+                var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+                csv.Configuration.HasHeaderRecord = true;
+                csv.Configuration.Delimiter = ";";
+                csv.Configuration.MissingFieldFound = null;
+                csv.Configuration.Encoding = System.Text.Encoding.UTF8;
+                csv.Configuration.HeaderValidated = null;
+
+                records = csv.GetRecords<TvdModel>().ToList();
+                if (records == null)
+                {
+                    Toaster.Add("Fehler beim Import", MatToastType.Danger);
+                    return;
+                }
+
+                foreach (var item in records)
+                {
+                    gves.Add(new GveModel()
+                    {
+                        GveId = Guid.NewGuid().ToString(),
+                        Name = item.Name,
+                        Tvd = item
+                    });
+                }
+            }
+        }
+    }
+}

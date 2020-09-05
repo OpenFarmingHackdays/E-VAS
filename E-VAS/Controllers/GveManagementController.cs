@@ -30,5 +30,17 @@ namespace E_VAS.Controllers
 
             return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
         }
+
+        [HttpPost("ImportFromTvd")]
+        public HttpResponseMessage ImportFromTvd([FromBody] GveModel model)
+        {
+            if (model.GveId == null)
+                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+            dataContext.GveModel.Add(model);
+
+            dataContext.SaveChanges();
+
+            return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+        }
     }
 }
